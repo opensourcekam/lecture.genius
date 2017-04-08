@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Lecture Genius</title>
+    <style media="screen">
+        /** Ultra Light */
+
+        @font-face {
+            font-family: "San Francisco";
+            font-weight: 100;
+            src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-ultralight-webfont.woff");
+        }
+        /** Thin */
+
+        @font-face {
+            font-family: "San Francisco";
+            font-weight: 200;
+            src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-thin-webfont.woff");
+        }
+        /** Regular */
+
+        @font-face {
+            font-family: "San Francisco";
+            font-weight: 400;
+            src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-regular-webfont.woff");
+        }
+        /** Medium */
+
+        @font-face {
+            font-family: "San Francisco";
+            font-weight: 500;
+            src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-medium-webfont.woff");
+        }
+        /** Semi Bold */
+
+        @font-face {
+            font-family: "San Francisco";
+            font-weight: 600;
+            src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-semibold-webfont.woff");
+        }
+        /** Bold */
+
+        @font-face {
+            font-family: "San Francisco";
+            font-weight: 700;
+            src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-bold-webfont.woff");
+        }
+
+        body {
+            font-family: "San Francisco", sans-serif;
+            background-color: white;
+            margin: 0;
+            height: 100%;
+            line-height: 1.6;
+        }
+
+        p,
+        li {
+            font-weight: 100;
+        }
+
+        h1 {
+            font-weight: 500;
+        }
+
+        h3 {
+            margin: 0;
+            font-weight: 300;
+        }
+
+        h3+p {
+            margin-top: 0;
+        }
+
+        nav {
+            grid-column: 1 / 2;
+            grid-row: 1;
+            background-color: rgba(246, 176, 217, .9);
+            width: 100vw;
+            padding: 5px 0px;
+            z-index: 999;
+        }
+
+        nav div {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+        }
+
+        mark {
+          background-color: rgb(128, 128, 128);
+        }
+        mark.selected {
+          background-color: rgba(250, 255, 0, 0.9);
+        }
+
+        .App {
+            width: 100vw;
+            max-width: 100vw;
+            background-color: #fff;
+        }
+
+        .Wrapper {
+            display: grid;
+            grid-gap: 1px;
+            grid-auto-rows: minmax(150px, auto);
+            width: 100vw;
+            border-top: 5px solid transparent;
+            transition: 0.5s ease;
+        }
+
+        .Wrapper:hover {
+            border-top: 10px solid rgba(246, 176, 217, .5);
+        }
+
+        .Wrapper>* {
+            padding: 10px;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-color: #333;
+            color: #fff;
+        }
+
+        .nav-seperator>h1 {
+            color: rgba(18, 38, 142, 0.68);
+        }
+
+        .nav-seperator h1:first-of-type::before {
+            content: ":: // ";
+        }
+
+        .nav-seperator h1:last-of-type::after {
+            content: " //";
+        }
+
+        .flex-wrapper>* {
+            padding: 10px;
+        }
+
+        .right-panel {
+            background-position: bottom left;
+            color: #fff;
+        }
+
+        .right-panel {
+            grid-column: 1 / 6;
+            grid-row: 5/ 6;
+            font-size: 1.15em;
+            padding: 20px;
+        }
+
+        .ImagePanel {
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            grid-column: 1 / 6;
+            grid-row: 1 / 5;
+        }
+
+        .ImagePanel h3 {
+            margin-top: auto;
+        }
+
+        .App-header {
+            background-color: #222;
+            height: 150px;
+            padding: 20px;
+            color: white;
+        }
+
+        .App-intro {
+            font-size: large;
+        }
+
+        @keyframes App-logo-spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .Projects {
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .projects-panel-below {
+            display: flex;
+        }
+
+        .projects-panel-below>* {
+            width: 25vw;
+            padding: 20px;
+        }
+
+        .Who {
+            position: fixed;
+            z-index: -99;
+        }
+
+        .Who img {
+            /* Set rules to fill background */
+            min-height: 100%;
+            min-width: 1024px;
+            /* Set up proportionate scaling */
+            width: 100%;
+            height: auto;
+            /* Set up positioning */
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        .social-bar {
+            grid-column: 3 / 3;
+            grid-row: 6 / 8;
+        }
+        /* Mobile */
+
+        @media (min-width: 500px) {
+            .Wrapper {
+                grid-template-columns: 1fr 1fr;
+            }
+            .ImagePanel {
+                grid-column: 1 / 5;
+                grid-row: 1 / 5;
+            }
+            .right-panel {
+                grid-column: 1 / 5;
+                grid-row: 5 / 6;
+            }
+        }
+
+        @media (min-width: 950px) {
+            .Wrapper {
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-template-rows: minmax(150px, auto) minmax(150px, auto);
+                grid-auto-rows: minmax(100px, auto);
+            }
+            .ImagePanel {
+                grid-column: 1 / 3;
+                grid-row: 1 / 6;
+            }
+            .ImagePanel#kamPhoto {
+                grid-column: 1 / 3;
+                grid-row: 1 / 8;
+            }
+            .right-panel {
+                grid-column: 3 / 3;
+                grid-row: 1 / 6;
+            }
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <main data-reactroot="" class="App">
+        <nav>
+            <div className='flex-wrapper'>
+                <h1><NavLink activeStyle={{
+                fontWeight: 500,
+                color: 'rgb(112, 189, 108)'
+              }} to='/who'>Lecture Genius</NavLink></h1>
+                <div className='nav-seperator'>
+                    <h1>
+
+                  <NavLink activeStyle={{
+                    fontWeight: 500,
+                    color: 'grey'
+                  }} to='/about'>Logout</NavLink>
+                </h1>
+                </div>
+            </div>
+        </nav>
+        <div class="Wrapper">
+            <aside class="ImagePanel" id="kamPhoto" style="background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(255, 255, 255, 0.498039)), url(&quot;/static/media/castle.f94e02d8.jpg&quot;);">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod <mark class="selected">tempor incididunt ut labore</mark> et dolore magna aliqua. Ut <mark>enim ad minim veniam, quis nostrud exercitation ullamco</mark> laboris nisi ut aliquip ex ea commodo
+                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </aside>
+            <section class="right-panel">
+                "Tempor incididunt ut labore"
+                <p>
+                    Corrosponds to the indicud album Kid Cudi recently released.
+                </p>
+            </section>
+        </div>
+        <footer>Copyright (c) 2017 Copyright Team wordsmiths.</footer>
+    </main>
+</body>
+
+</html>
