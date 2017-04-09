@@ -11,20 +11,21 @@ router.post('/login', function(req, res) {
   var username = req.body.username;
   var password = req.body.password;
 
+
   Student.findOne({username: username, password: password}, function(err, student) {
     if(err) {
       console.log(err);
       return res.status(500).send();
     }
 
-  if(!user) {
+  if(!Student) {
     return res.status(404).send();
   }
 
-  return res.status(200).send()
-
+  console.log(res)
+  return res.status(200).json(student);
   });
-
+});
 router.post('/register', function(req, res) {
   var username = req.body.username;
   var password = req.body.password;
@@ -47,5 +48,3 @@ router.post('/register', function(req, res) {
  })
 
 module.exports = router;
-
- })
