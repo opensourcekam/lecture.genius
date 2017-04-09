@@ -1,113 +1,116 @@
+var Class = require('../database/models/Class.js');
+var Lecture = require('../database/models/Lecture.js');
 var express = require('express');
 var router = express.Router();
+var db = require('../connection.js');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index');
-});
+/*
 
-router.put('/edit/:lecture', (req, res, next) => {
-	// body...
-		/* 
-	database.findAndUpdate(lectureID, (data) => {
-		console.log('COMPLETE')
-	})
-	*/
-})
+  CLASSES
+    POST method to create a new class
+      /create/class
+      {
+        ...
+        lectures: [lectureIds]
+      }
+  LECTURES
+    POST method to create a lecture
+    /create/lecture/
+      POST body contains class id
 
-router.post('/delete/:lecture', (req, res, next) => {
-	let lectureID = req.params.lecture;
-	
-	/* 
-	database.findAndDelete(lectureID, (data) => {
-		console.log('COMPLETE')
-	})
-	*/
-})
+      lecture object in database ~ {
+        ....
+        classId: 
+      }
 
-router.post('/create', (req, res, next) => {
+
+*/
+
+router.post('/create/:type', (req, res, next) => {
 	// use query params
-	// let lecture = new Lecture({
-	// 	course_title: req.query.name,
-	// 	course_date: req.query.date,
-	// 	course_instructor: req.query.instructor
-	// });
+  console.log(req.body, req.query, req.params);
 
-	// database.create('Lecture', lecture)
+  if (req.params.type === 'class') {
+
+    if (!("lectures" in req.body)) {
+      req.body["lectures"] = []
+    }
+
+    Class.create(req.body, (err, doc) => {
+      console.log("Reach Arrow function of Class.create");
+      console.log(doc);
+      if(err){
+        res.json({"error": err});
+      } else {
+        res.json({"success": doc})
+      }
+   });
+  }  
+
+  if (req.params.type === 'lecture') {
+
+    if (!req.body.classId) {
+      res.end(400, "You must hvae a classId when making a new lecture");
+    }
+
+  	Lecture.create(req.body, (err, doc) => {
+      console.log(doc);
+      if(err){
+        res.json({"error": err});
+      } else {
+
+        Class.insert({_id: ObjectID(req.body.classId)}, {
+          $add: {
+            
+            "lectures": doc._id
+          }
+        });
+
+        res.json({"success": doc})
+      }
+   });
+
+
+
+
+  }
 })
 
-router.post('/search/:lecture', (req, res, next) => {
-	// body...
+router.post('/search/:id', (req, res, next) => {
+  Class.findById(res.query.id, (err, doc) => {
+    console.log(doc);
+  })
 })
 
-router.get('/get-data', function(req, res, next) {
-  var resultArray = [];
-  mongo.connect(url, function(err, db) {
-    assert.equal(null, err);
-    var cursor = db.collection('user-data').find();
-    cursor.forEach(function(doc, err) {
-      assert.equal(null, err);
-      resultArray.push(doc);
-    }, function() {
-      db.close();
-      res.render('index', {items: resultArray});
-    });
-  });
-});
-
-router.post('/insert', function(req, res, next) {
-  var item = {
-    title: req.body.title,
-    content: req.body.content,
-    author: req.body.author
-  };
-
-  mongo.connect(url, function(err, db) {
-    assert.equal(null, err);
-    db.collection('user-data').insertOne(item, function(err, result) {
-      assert.equal(null, err);
-      console.log('Item inserted');
-      db.close();
-    });
-  });
-
-  res.redirect('/');
-});
-
-router.post('/update', function(req, res, next) {
-  var item = {
-    title: req.body.title,
-    content: req.body.content,
-    author: req.body.author
-  };
+router.put('/edit', function(req, res) {
   var id = req.body.id;
-
-  mongo.connect(url, function(err, db) {
-    assert.equal(null, err);
-    db.collection('user-data').updateOne({"_id": objectId(id)}, {$set: item}, function(err, result) {
-      assert.equal(null, err);
-      console.log('Item updated');
-      db.close();
+  console.log(req.body)
+  Class.update(req.body.id, function (err, doc) {
+        console.log(doc)
+        res.send(
+            (err === null) ? {msg: ''} : {msg: err}
+        );
     });
-  });
 });
 
-router.post('/delete', function(req, res, next) {
+router.delete('/delete', function(req, res, next) {
   var id = req.body.id;
-
-  mongo.connect(url, function(err, db) {
-    assert.equal(null, err);
-    db.collection('user-data').deleteOne({"_id": objectId(id)}, function(err, result) {
-      assert.equal(null, err);
-      console.log('Item deleted');
-      db.close();
-    });
+  console.log(req.body)
+  Class.findByIdAndRemove(req.body.id, function(err, r) {
+    res.json(r)
   });
 });
+
+router.get('/classes/:id', (req, res, next) => {
+  Class.findById(req.params.id, function(err, data){
+  console.log(data)
+  res.json(data)
+  res.end(200)
+
+  }) 
+})
+
+router.post('/classes/')
 
 module.exports = router;
