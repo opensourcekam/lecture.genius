@@ -9,7 +9,7 @@ const Nav = (props) => {
           <NavLink activeStyle={{
             fontWeight: 500,
             color: 'rgb(112, 189, 108)'
-          }} to='/'>Lecture Genius</NavLink>
+          }} to='/'>Brain Swarm</NavLink>
         </h1>
 
       </div>
