@@ -1,11 +1,13 @@
 import React, {PropTypes} from 'react';
-import { NavLink } from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 const Nav = (props) => {
   return (
     <nav>
       <div className='flex-wrapper'>
-        <h1>
+        <h1 style={{
+          paddingTop: '40px'
+        }}>
           <NavLink activeStyle={{
             fontWeight: 500,
             color: 'rgb(112, 189, 108)'

@@ -12,27 +12,29 @@ export default class Lectures extends React.Component {
 
   render () {
     return (
-      <div>
-        <p>LECTURES</p>
+      <div style={{display: 'grid', 'gridTemplateColumns': '400px repeat(auto-fill, 400px)',
+        'justifyContent': 'space-around'}}>
         {/* <ClassesPanel />  */}
         {this.props.courses.map((course) => {
           console.log('course ', course);
           return (
-            <div>
-              <h1>{course.title}</h1>
+            <table>
+              <tr>
+                <h1>{course.title}</h1>
+              </tr>
               <h3>{course.professor} lectures:</h3>
               <div>
                 {course.lectures.map((lecture) => {
                   console.log(lecture);
                   return (
-                    <div>
+                    <td style={{display: 'block'}}>
                       <Link to={`/lecture/${lecture.id}`}>{lecture.subject}</Link>
-                    </div>
+                    </td>
                   );
                 })
               }
               </div>
-            </div>
+            </table>
           );
         })}
       </div>
