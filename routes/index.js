@@ -27,54 +27,54 @@ var db = require('../connection.js');
 
 */
 
-router.post('/create/:type', (req, res, next) => {
+router.post('/create/class', (req, res, next) => {
 	// use query params
   console.log(req.body, req.query, req.params);
-
-  if (req.params.type === 'class') {
-
-    if (!("lectures" in req.body)) {
-      req.body["lectures"] = []
-    }
-
-    Class.create(req.body, (err, doc) => {
-      console.log("Reach Arrow function of Class.create");
-      console.log(doc);
-      if(err){
-        res.json({"error": err});
-      } else {
-        res.json({"success": doc})
-      }
-   });
-  }  
-
-  if (req.params.type === 'lecture') {
-
-    if (!req.body.classId) {
-      res.end(400, "You must hvae a classId when making a new lecture");
-    }
-
-  	Lecture.create(req.body, (err, doc) => {
-      console.log(doc);
-      if(err){
-        res.json({"error": err});
-      } else {
-
-        Class.insert({_id: ObjectID(req.body.classId)}, {
-          $add: {
-            
-            "lectures": doc._id
-          }
-        });
-
-        res.json({"success": doc})
-      }
-   });
-
-
-
-
+  if (!req.body._id) {
+        res.status(400);
   }
+
+  Class.create(req.body, (err, doc) => {
+    console.log("Reach Arrow function of Class.create");
+    console.log(doc);
+    if(err){
+      res.json({"error": err});
+    } else {
+      res.json({"success": doc})
+    }
+ });
+})
+
+router.post('/create/lecture', (req, res, next) => {
+    if (!req.body._id) {
+        res.status(400);
+    }
+
+    // lectures needs to match the _class with the _id of the Class model
+    // so here we need to grab out the id for our class
+    Class.findById(req.body._id, (err, classDoc) => {
+      console.log('req.body', req.body)
+      let { title, lectureNotes, courseDate, courseInstructor } = req.body;
+      let lecture = Lecture.create({
+        _creator: req.body._id,
+        title,
+        lectureNotes,
+        courseDate,
+        courseInstructor
+      }, (err, lectureDoc) => {
+          console.log(lectureDoc);
+          classDoc.lectures.push(lectureDoc);
+          classDoc.save((err, doc) => {
+            if(err){
+              res.json(err);
+            } else {
+              res.json(doc)
+            }
+          });
+      })
+
+    })
+
 })
 
 router.post('/search/:id', (req, res, next) => {
@@ -102,15 +102,12 @@ router.delete('/delete', function(req, res, next) {
   });
 });
 
-router.get('/classes/:id', (req, res, next) => {
-  Class.findById(req.params.id, function(err, data){
-  console.log(data)
-  res.json(data)
-  res.end(200)
-
-  }) 
+router.get('/classes', (req, res, next) => {
+  Class.find({}).populate('lectures').exec(function (err, doc) {
+  // console.log(doc)
+  res.json(doc)
+  // console.log(doc.populated('author')) // '5144cf8050f071d979c118a7'
 })
-
-router.post('/classes/')
+})
 
 module.exports = router;

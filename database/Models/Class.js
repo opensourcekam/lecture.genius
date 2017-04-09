@@ -1,5 +1,10 @@
-var mongoose = require('mongoose');
-var ClassSchema = new mongoose.Schema({
+var mongoose = require('mongoose')
+  , Schema = mongoose.Schema
+
+var ClassSchema = Schema({
+	_id: {
+		type: Number
+	},
    	title: {
    		type: String
    	},
@@ -8,14 +13,13 @@ var ClassSchema = new mongoose.Schema({
 	},
 	lectures: [
 		{
-			type: mongoose.Schema.Types.ObjectId,
+			type: Schema.Types.ObjectId,
 			ref: 'Lecture'
 		}
 	],
 	date: {
 		type: Date
 	}
-	// has many lectures --- run population on Lecture schema 
 });
 
 module.exports = mongoose.model('Class', ClassSchema);

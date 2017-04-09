@@ -1,7 +1,9 @@
-var mongoose = require('mongoose');
-var LectureSchema = new mongoose.Schema({
-	belongsToClass:{
-		type: 'String',
+var mongoose = require('mongoose')
+  , Schema = mongoose.Schema
+  
+var LectureSchema = Schema({
+	_creator:{
+		type: Number,
 		ref: 'Class'
 	},
 	title : {
@@ -17,16 +19,12 @@ var LectureSchema = new mongoose.Schema({
     	type: String,
     	// REFRENCE TO CLASS TEACHER
 	},
-	courseId: {
-		type: String
-	},
-	comments: [
-		{
-			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Student',
-			comment: String
-		}
-	],
-}, { collection: 'Lecture' });
+	// comments: [
+	// 	{
+	// 		ref: 'Student',
+	// 		comment: String
+	// 	}
+	// ],
+});
 
 module.exports = mongoose.model('Lecture', LectureSchema);
