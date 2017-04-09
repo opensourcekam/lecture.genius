@@ -1,24 +1,288 @@
+@font-face {
+    font-family: "San Francisco";
+    font-weight: 100;
+    src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-ultralight-webfont.woff");
+}
+
+
+/** Thin */
+
+@font-face {
+    font-family: "San Francisco";
+    font-weight: 200;
+    src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-thin-webfont.woff");
+}
+
+
+/** Regular */
+
+@font-face {
+    font-family: "San Francisco";
+    font-weight: 400;
+    src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-regular-webfont.woff");
+}
+
+
+/** Medium */
+
+@font-face {
+    font-family: "San Francisco";
+    font-weight: 500;
+    src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-medium-webfont.woff");
+}
+
+
+/** Semi Bold */
+
+@font-face {
+    font-family: "San Francisco";
+    font-weight: 600;
+    src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-semibold-webfont.woff");
+}
+
+
+/** Bold */
+
+@font-face {
+    font-family: "San Francisco";
+    font-weight: 700;
+    src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-bold-webfont.woff");
+}
+
+body {
+    font-family: "San Francisco", sans-serif;
+    background-color: white;
+    margin: 0;
+    height: 100%;
+    line-height: 1.6;
+}
+
+p, li {
+    font-weight: 100;
+}
+
+h1 {
+    font-weight: 500;
+}
+
+h2 {
+    margin: 0;
+    font-weight: 300;
+}
+
+h2+p {
+    margin-top: 0;
+}
+
+nav {
+    grid-column: 1 / 2;
+    grid-row: 1;
+    background-color: #352626;
+    width: 100vw;
+    z-index: 999;
+}
+
+nav div.flex-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+}
+
+nav>* {
+    padding: 0px 10px;
+}
+
+mark {
+    background-color: rgb(128, 128, 128);
+}
+
+mark.selected {
+    background-color: rgba(250, 255, 0, 0.9);
+}
+
 .App {
-  text-align: center;
+    width: 100vw;
+    max-width: 100vw;
+    background-color: #fff;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.wrapper {
+    display: grid;
+    width: 100vw;
+    max-width: 1260px;
+    margin: 20px auto;
+    border-top: 5px solid transparent;
+    transition: 0.5s ease;
+    /*background-color: #fff;*/
+    /*color: #444;*/
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.arrow-left {
+    width: 0;
+    height: 0;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-right: 20px solid rgba(250, 255, 0, 0.9);
+    position: absolute;
+    top: 95px;
+    left: -20px;
 }
 
-.App-intro {
-  font-size: large;
+.wrapper>* {
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: black;
+}
+
+.right-panel {
+    background-position: bottom left;
+}
+
+.right-panel {
+    grid-column: 1 / 6;
+    grid-row: 5/ 6;
+    font-size: 1.15em;
+    padding: 10px;
+}
+
+.left-panel {
+    padding: 10px;
+}
+
+.left-panel div {
+    overflow: scroll;
+    height: 80vh;
+}
+
+.left-panel h2 {
+    margin-top: auto;
+}
+
+.left-panel p {
+    overflow: scroll;
+    /*height: 400px;*/
+}
+
+.left-panel p {
+    font-size: 1.7em;
+}
+
+.right-panel p {
+    font-size: 1.7em;
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.Projects {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.projects-panel-below {
+    display: flex;
+}
+
+.projects-panel-below>* {
+    width: 25vw;
+    padding: 20px;
+}
+
+.Who {
+    position: fixed;
+    z-index: -99;
+}
+
+.Who img {
+    /* Set rules to fill background */
+    min-height: 100%;
+    min-width: 1024px;
+    /* Set up proportionate scaling */
+    width: 100%;
+    height: auto;
+    /* Set up positioning */
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.social-bar {
+    grid-column: 3 / 3;
+    grid-row: 6 / 8;
+}
+
+textarea.annotation-comment-input {
+    width: 100%;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-image: initial;
+    border-bottom: 1px solid grey;
+    font-size: 1.6em;
+    padding: 0px;
+    margin: 0px;
+    height: 68px;
+}
+
+textarea {
+    resize: none;
+    border: none;
+    overflow: auto;
+    outline: none;
+    box-shadow: none;
+}
+
+
+/* Mobile */
+
+@media (min-width: 500px) {
+    .wrapper {
+        grid-template-columns: 1fr 1fr;
+    }
+    .left-panel {
+        grid-column: 1 / 5;
+        grid-row: 1 / 5;
+    }
+    .right-panel {
+        grid-column: 1 / 5;
+        grid-row: 5 / 6;
+    }
+}
+
+@media (min-width: 950px) {
+    .wrapper {
+        grid-gap: 5px;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: minmax(150px, auto) minmax(150px, auto);
+        grid-auto-rows: minmax(100px, auto);
+    }
+    .top-panel {
+        grid-column: 1 / 4;
+        grid-row: 1 / 3;
+        background-color: blue;
+    }
+    .left-panel {
+        grid-column: 1 / 2;
+        grid-row: 3 / 6;
+    }
+    .right-panel {
+        grid-column: 2 / 4;
+        grid-row: 3 / 6;
+        position: relative;
+        border-left: 5px solid rgba(250, 255, 0, 0.9);
+    }
 }

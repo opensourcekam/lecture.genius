@@ -1,19 +1,24 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
+import {HashRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
+
 import logo from './logo.svg';
 import './App.css';
+import Nav from './Parts/Nav';
+import Home from './Home';
+import Lecture from './Lecture/Lecture';
 
 class App extends Component {
-  render() {
+  render () {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+      <Router>
+        <div className='App'>
+          <Nav />
+          <Switch>
+            <Route exact path='/' component={Home} />
+            <Route exact path='/lecture/:id' component={Lecture} />
+          </Switch>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      </Router>
     );
   }
 }
